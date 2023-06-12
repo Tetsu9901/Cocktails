@@ -1,12 +1,14 @@
 import * as React from 'react';
 import MyNavigation from './navigation/myNavigation';
-import Card from './components/card';
 import { View, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <MyNavigation />
+      <NavigationContainer>
+        <MyNavigation />
+      </NavigationContainer>
     </View>
   );
 };
