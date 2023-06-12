@@ -13,7 +13,7 @@ const favName = 'Favoris';
 
 const Tab = createBottomTabNavigator();
 
-function MyNavigation({ navigation }) {
+function MyNavigation() {
     return (
             <Tab.Navigator
                 screenOptions={({ route }) => ({

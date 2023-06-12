@@ -9,24 +9,24 @@ const Card = ({navigation}) => {
   const [drink, setDrink] = useState([""]);
   const [favList, setFavList] = useState([]);
 
-  const goToDetails = (id) => {
-    navigation.navigate("Details", { id: id });
-  };
-
-
+  
+  
   useEffect(() => {
     const fetchDrink = () => {
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic`)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          setDrink(data.drinks);
-        })
-        .catch((error) => console.error(error));
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setDrink(data.drinks);
+      })
+      .catch((error) => console.error(error));
     }
     fetchDrink();
   }, []);
-
+  
+  const goToDetails = (id) => {
+    navigation.navigate("Details", { id: id });
+  };
   return (
     <View style={styles.container}>
         {drink.map((item, index) => {

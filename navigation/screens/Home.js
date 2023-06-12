@@ -7,7 +7,7 @@ function HomeScreen({ navigation }) {
         <View style={styles.container}>
         <ScrollView style={styles.scroll}>
             <Card
-                nav={navigation}
+                navigation={navigation}
             />
         </ScrollView >
     </View >
