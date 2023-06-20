@@ -2,15 +2,13 @@ import * as React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
 import FavBtn from "./FavBtn";
 import { useState, useEffect } from "react";
+import { GetFavList } from "./Fav";
 
-const Card = ({navigation}) => {
-
+const Card = ({ navigation}) => {
   
   const [drink, setDrink] = useState([""]);
   const [favList, setFavList] = useState([]);
 
-  
-  
   useEffect(() => {
     const fetchDrink = () => {
       fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic`)
@@ -24,9 +22,19 @@ const Card = ({navigation}) => {
     fetchDrink();
   }, []);
   
-  const goToDetails = (id) => {
-    navigation.navigate("Details", { id: id });
+  const goToDetailsScreen = async (item) => {
+    try {
+      const response = await fetch(
+        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${item.idDrink}`
+      );
+      const data = await response.json();
+      navigation.navigate('Details', { item: data.drinks[0] });
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+
   return (
     <View style={styles.container}>
         {drink.map((item, index) => {
@@ -34,17 +42,17 @@ const Card = ({navigation}) => {
             <TouchableOpacity
               key={index}
               style={styles.card} 
-              onPress={() => goToDetails(item.idDrink)}
+              onPress={() => goToDetailsScreen(item)}
             >
               <Image style={styles.cardImage} source={{ uri: item.strDrinkThumb }} />
               <View style={styles.bandeau}>
               <Text style={styles.cardText}>{item.strDrink}</Text>
               <FavBtn setFavList={setFavList} name={item.strDrink} />
-              {console.log(favList)}
               </View>
             </TouchableOpacity>
           );
         })}
+        <GetFavList favList={favList} />
     </View>
   );
 };
